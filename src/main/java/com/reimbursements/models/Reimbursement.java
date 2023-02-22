@@ -34,8 +34,8 @@ public class Reimbursement {
 	@Column(nullable=false)
     private double amount;
 	@Column(nullable=false)
-	private Timestamp submitted;
-    private Timestamp resolved;
+	private String submitted;
+    private String resolved;
     @Column(nullable=false)
     private String description;
     
@@ -48,8 +48,12 @@ public class Reimbursement {
     @JoinColumn(name = "typeID")
     @JsonBackReference(value = "type")
     private Type type;
-    
-	public Reimbursement(int id, User author, User resolver, double amount, Timestamp submitted, Timestamp resolved,
+
+	public Reimbursement() {
+		super();
+	}
+
+	public Reimbursement(int id, User author, User resolver, double amount, String submitted, String resolved,
 			String description, Status status, Type type) {
 		super();
 		this.id = id;
@@ -61,10 +65,6 @@ public class Reimbursement {
 		this.description = description;
 		this.status = status;
 		this.type = type;
-	}
-
-	public Reimbursement() {
-		super();
 	}
 
 	public int getId() {
@@ -99,19 +99,19 @@ public class Reimbursement {
 		this.amount = amount;
 	}
 
-	public Timestamp getSubmitted() {
+	public String getSubmitted() {
 		return submitted;
 	}
 
-	public void setSubmitted(Timestamp submitted) {
+	public void setSubmitted(String submitted) {
 		this.submitted = submitted;
 	}
 
-	public Timestamp getResolved() {
+	public String getResolved() {
 		return resolved;
 	}
 
-	public void setResolved(Timestamp resolved) {
+	public void setResolved(String resolved) {
 		this.resolved = resolved;
 	}
 
@@ -167,6 +167,9 @@ public class Reimbursement {
 				+ status + ", type=" + type + "]";
 	}
 
+	
+	
+    
 	
 	
 }

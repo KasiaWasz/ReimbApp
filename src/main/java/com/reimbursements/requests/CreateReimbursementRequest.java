@@ -1,15 +1,20 @@
 package com.reimbursements.requests;
 
-import java.sql.Timestamp;
-
 public class CreateReimbursementRequest {
 	
 	private int authorID;
     private double amount;
-    private Timestamp submitted;
-    private int statusID;
     private int typeID;
     private String description;
+    
+	public CreateReimbursementRequest(int authorID, double amount, int typeID, String description) {
+		super();
+		this.authorID = authorID;
+		this.amount = amount;
+		this.typeID = typeID;
+		this.description = description;
+	}
+	
 	public int getAuthorID() {
 		return authorID;
 	}
@@ -22,18 +27,7 @@ public class CreateReimbursementRequest {
 	public void setAmount(double amount) {
 		this.amount = amount;
 	}
-	public Timestamp getSubmitted() {
-		return submitted;
-	}
-	public void setSubmitted(Timestamp submitted) {
-		this.submitted = submitted;
-	}
-	public int getStatusID() {
-		return statusID;
-	}
-	public void setStatusID(int statusID) {
-		this.statusID = statusID;
-	}
+	
 	public int getTypeID() {
 		return typeID;
 	}

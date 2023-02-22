@@ -20,6 +20,6 @@ public class TypeService {
 
 
 		public Type getByTypeID(int typeID) {
-			return typeRepository.getByTypeID(typeID);
+			return typeRepository.getById(typeID);
 		}
 }

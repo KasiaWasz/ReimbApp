@@ -4,26 +4,25 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
 import javax.persistence.NamedQuery;
-
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
-
-@NamedQuery(name = "UserRepository.getUserByUsername", query = "select u.username, u.userID, a.authorityName from User u "
+@NamedQuery(name = "User.getUser", query = "select u.username, u.userID, a.authorityName from User u "
 		+ "join u.authorities ua on u.userID = ua.userID join Authority a on ua.authorityID = a.authorityID where u.username= :username")
+
+//@NamedQuery(name = "User.getUser", query = "select u.username, u.userID, a.authorityName from User u "
+//		+ "join user_authorities uu on uu.user_user_id = u.userID join Authority a on uu.authorities_authorityid = a.authorityID "
+//		+"where u.username= :username")
 
 
 public class User{
@@ -42,6 +41,7 @@ public class User{
 	@Column(nullable=false, unique=true)
     private String username;
 	@Column(nullable=false)
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private String firstname;
     private String lastname;
@@ -49,7 +49,6 @@ public class User{
     private String email;
     private String role;
     
-
     @OneToMany
     
     private Set<Authority> authorities;
