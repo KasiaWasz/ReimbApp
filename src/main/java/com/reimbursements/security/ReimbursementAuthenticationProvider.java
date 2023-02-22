@@ -37,6 +37,7 @@ public class ReimbursementAuthenticationProvider implements AuthenticationProvid
 		User user = userService.getUser(username);
 		if (user != null) {
 			if (passwordEncoder.matches(pwd, user.getPassword())) {
+
 				return new UsernamePasswordAuthenticationToken(username, pwd, getGrantedAuthorities(user.getAuthorities()));
 			} else {
 				throw new BadCredentialsException("Invalid password!");

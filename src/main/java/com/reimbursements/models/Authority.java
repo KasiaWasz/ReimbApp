@@ -24,22 +24,21 @@ public class Authority {
 	private int authorityID;
 	@Column(nullable=false)
 	private String authorityName;
-	
-	@ManyToOne
-	@JsonBackReference(value="authorities")
-	@JoinColumn(name = "userAuthID")
-	
-	private User user;
+	@Column(nullable = false)
+	private int userID;
+
+
 	
 	public Authority() {
 		super();
 	}
 
-	public Authority(int authorityID, String authorityName, User user) {
+
+	public Authority(int authorityID, String authorityName, int userID) {
 		super();
 		this.authorityID = authorityID;
 		this.authorityName = authorityName;
-		this.user = user;
+		this.userID = userID;
 	}
 
 	public int getAuthorityID() {
@@ -58,17 +57,20 @@ public class Authority {
 		this.authorityName = authorityName;
 	}
 
-	public User getUser() {
-		return user;
+	public int getUserID() {
+		return userID;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUserID(int userID) {
+		this.userID = userID;
+
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(authorityID, authorityName, user);
+
+		return Objects.hash(authorityID, authorityName, userID);
+
 	}
 
 	@Override
@@ -81,13 +83,19 @@ public class Authority {
 			return false;
 		Authority other = (Authority) obj;
 		return authorityID == other.authorityID && Objects.equals(authorityName, other.authorityName)
-				&& Objects.equals(user, other.user);
+
+				&& userID == other.userID;
+
 	}
 
 	@Override
 	public String toString() {
-		return "Authority [authorityID=" + authorityID + ", authorityName=" + authorityName + ", user=" + user + "]";
+
+		return "Authority [authorityID=" + authorityID + ", authorityName=" + authorityName + ", userID=" + userID
+				+ "]";
 	}
 
 	
+	
+
 }

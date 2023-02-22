@@ -11,6 +11,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import javax.persistence.NamedQuery;
+
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -18,6 +21,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
+
+@NamedQuery(name = "UserRepository.getUserByUsername", query = "select u.username, u.userID, a.authorityName from User u "
+		+ "join u.authorities ua on u.userID = ua.userID join Authority a on ua.authorityID = a.authorityID where u.username= :username")
+
+
 public class User{
 
 	@Id
@@ -41,8 +49,8 @@ public class User{
     private String email;
     private String role;
     
-    @OneToMany(mappedBy="user", fetch=FetchType.LAZY)
-    @JsonManagedReference(value="authorities")
+
+    @OneToMany
     
     private Set<Authority> authorities;
     
