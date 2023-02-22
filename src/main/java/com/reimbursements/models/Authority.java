@@ -26,10 +26,13 @@ public class Authority {
 	private String authorityName;
 	@Column(nullable = false)
 	private int userID;
+
+
 	
 	public Authority() {
 		super();
 	}
+
 
 	public Authority(int authorityID, String authorityName, int userID) {
 		super();
@@ -60,11 +63,14 @@ public class Authority {
 
 	public void setUserID(int userID) {
 		this.userID = userID;
+
 	}
 
 	@Override
 	public int hashCode() {
+
 		return Objects.hash(authorityID, authorityName, userID);
+
 	}
 
 	@Override
@@ -77,15 +83,19 @@ public class Authority {
 			return false;
 		Authority other = (Authority) obj;
 		return authorityID == other.authorityID && Objects.equals(authorityName, other.authorityName)
+
 				&& userID == other.userID;
+
 	}
 
 	@Override
 	public String toString() {
+
 		return "Authority [authorityID=" + authorityID + ", authorityName=" + authorityName + ", userID=" + userID
 				+ "]";
 	}
 
 	
 	
+
 }

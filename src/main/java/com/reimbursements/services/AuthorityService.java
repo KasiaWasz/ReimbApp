@@ -36,6 +36,9 @@ public class AuthorityService{
 	public void setNewAuthority(CreateAuthorityRequest req) {
 		final Authority newAuthority = new Authority();
 		newAuthority.setAuthorityName(req.getAuthorityName());
+
+		newAuthority.setUser(userService.getByUserId(req.getUserAuthID()));
+
 		authorityRepository.save(newAuthority);
 	}
 
