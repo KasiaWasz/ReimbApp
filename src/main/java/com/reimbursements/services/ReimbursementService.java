@@ -37,9 +37,8 @@ protected TypeService typeService;
 
 	public void addNewReimbursement(CreateReimbursementRequest req) {
 		final Reimbursement newReimbursement = new Reimbursement();
-		final User author = new User();
 		
-		newReimbursement.setAuthor(userService.getByUserId(author.getUserID()));
+		newReimbursement.setAuthor(userService.getByUserId(req.getAuthorID()));
 		newReimbursement.setAmount(req.getAmount());
 		newReimbursement.setSubmitted(String.valueOf(new Date(System.currentTimeMillis())));
 		newReimbursement.setStatus(statusService.getByStatusID(1)); // 1-append, 2-denied, 3-approved
