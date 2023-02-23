@@ -21,6 +21,6 @@ public class StatusService {
 
 
 		public Status getByStatusID(int statusID) {
-			return statusRepository.getByStatusID(statusID);
+			return statusRepository.getById(statusID);
 		}
 }

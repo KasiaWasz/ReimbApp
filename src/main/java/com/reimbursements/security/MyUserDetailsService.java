@@ -1,9 +1,5 @@
 package com.reimbursements.security;
 
-
-import javax.persistence.NamedQuery;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

@@ -1,5 +1,7 @@
 package com.reimbursements.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -46,13 +48,14 @@ public class UserService {
 
 	public User getUser(String username) {
 		User user = userRepository.getUserByUsername(username);
-		if(user == null) {
-			return null;
-		}else {
-			return userRepository.getUserByUsername(username);
+			return user;
 		}
-	}
 	
+
+	
+	public List<User> getAllUsers(){
+		return userRepository.findAll();
+	}
 	
 	public User getByUserId(int id) {
 		return userRepository.getByUserID(id).orElse(null);

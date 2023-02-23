@@ -7,6 +7,6 @@ import com.reimbursements.models.Status;
 
 
 public interface StatusRepository extends JpaRepository<Status, Integer> {
-	public Status getByStatusID(int statusID);
+	
 
 }

@@ -9,6 +9,18 @@ public class CreateUserRequest {
     private String email;
     private String role;
     private int authorityID;
+    
+	public CreateUserRequest(String username, String password, String firstname, String lastname, String email,
+			String role, int authorityID) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.email = email;
+		this.role = role;
+		this.authorityID = authorityID;
+	}
 	public String getUsername() {
 		return username;
 	}

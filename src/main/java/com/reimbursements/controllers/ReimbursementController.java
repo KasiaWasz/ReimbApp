@@ -5,6 +5,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,8 +19,8 @@ import com.reimbursements.services.ReimbursementService;
 
 
 @RestController
+//@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 @RequestMapping("/reimbursements")
-@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 public class ReimbursementController {
 	
 	private ReimbursementService reimbursementService;
@@ -29,20 +31,17 @@ public class ReimbursementController {
 		this.reimbursementService = reimbursementService;
 	}
 	
-	
-	
+	@PostMapping("/add-new-reimbursement")
 	public ResponseEntity<Reimbursement> addReimbursement(@RequestBody CreateReimbursementRequest req) {
 		reimbursementService.addNewReimbursement(req);
 		return ResponseEntity.status(200).build();
 	}
 	
-	
+	@PutMapping("/update-reimbursement")
 	public ResponseEntity<UpdateReimbursementRequest> updateReimbursement(@RequestBody UpdateReimbursementRequest req, HttpSession session){ 
-		if(session.getAttribute("logged in")!=null&&(Boolean)session.getAttribute("logged in")) {
 			reimbursementService.update(req);
 			return ResponseEntity.status(200).body(req);
-		}else {
-		return null;}}
+		}
 	
 
 }
