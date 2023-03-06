@@ -27,8 +27,6 @@ public class AuthorityService{
 	}
 
 
-	
-
 
 	public void setNewAuthority(CreateAuthorityRequest req) {
 		final Authority newAuthority = new Authority();

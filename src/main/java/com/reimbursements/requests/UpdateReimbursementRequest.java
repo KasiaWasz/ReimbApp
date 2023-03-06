@@ -7,6 +7,13 @@ public class UpdateReimbursementRequest {
 	private int resolverID;
 	private int statusID;
 	
+	
+	public UpdateReimbursementRequest(int id, int resolverID, int statusID) {
+		super();
+		this.id = id;
+		this.resolverID = resolverID;
+		this.statusID = statusID;
+	}
 	public int getId() {
 		return id;
 	}
