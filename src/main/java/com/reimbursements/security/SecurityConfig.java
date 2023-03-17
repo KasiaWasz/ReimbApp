@@ -12,12 +12,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
-
 	
 //	@Override
 //	protected void configure(HttpSecurity http) throws Exception {
@@ -33,35 +33,32 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 //				config.setMaxAge(3600L);
 //				return config;
 //			}
-//		})
+//		}).and().csrf().ignoringAntMatchers("/login").csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
 //				.and().authorizeRequests()
 //				
-//				.antMatchers("/users/authority-registration").authenticated()
-//				.antMatchers("/reimbursements/add-new-reimbursement").authenticated()
-//				.antMatchers("/users/register").hasRole("MANAGER")
-//				.antMatchers("/users/get-all-users").hasRole("MANAGER")
-//				.antMatchers("/reimbursements/update-reimbursement").hasRole("MANAGER")
-//				.antMatchers("/login").permitAll()
-//				.and().httpBasic();
+//				.antMatchers("/reimbursements/add-new-reimbursement","/users/user-details" ).authenticated()
+//				.antMatchers("/users/get-all-users", "/reimbursements/update-reimbursement", "/users/authority-registration").hasRole("MANAGER")
+//				.antMatchers("/users/register","/login").permitAll()
+//				.and().formLogin();
 //	}
 	
-	   public void addCorsMappings(CorsRegistry registry) {
-           registry.addMapping("/*").
-           allowedOrigins("*").
-           allowedMethods("*").
-           allowedHeaders("*").
-           allowCredentials(true);
-       }
+//	   public void addCorsMappings(CorsRegistry registry) {
+//           registry.addMapping("/*").
+//           allowedOrigins("/*").
+//           allowedMethods("/*").
+//           allowedHeaders("/*").
+//           allowCredentials(true);
+//       }
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		
 		http
-			.csrf().disable()
-			.authorizeRequests()
-			.antMatchers("/users/register", "/reimbursements/add-new-reimbursement").authenticated()
-			.antMatchers("/users/get-all-users", "/reimbursements/update-reimbursement", "/users/authority-registration").hasRole("MANAGER")
-			.antMatchers("/login").permitAll()
+		.csrf().disable()
+		.authorizeRequests()
+			.antMatchers(  "/users/user-details").authenticated()
+			//.antMatchers( "/users/authority-registration").hasRole("MANAGER")
+			.antMatchers("/reimbursements/update-reimbursement","/reimbursements/add-new-reimbursement", "/users/authority-registration", "/login", "/users/register", "/users/get-all-users").permitAll()
 			.and().formLogin();
 	}
 	 @Bean

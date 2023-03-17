@@ -17,14 +17,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
-@NamedQuery(name = "User.getUser", query = "select u.username, u.userID, a.authorityName from User u "
+@NamedQuery(name = "UserRepository.getUserByUsername", query = "select u.username, u.userID, a.authorityName from User u "
 		+ "join u.authorities ua on u.userID = ua.userID join Authority a on ua.authorityID = a.authorityID where u.username= :username")
-
-//@NamedQuery(name = "User.getUser", query = "select u.username, u.userID, a.authorityName from User u "
-//		+ "join user_authorities uu on uu.user_user_id = u.userID join Authority a on uu.authorities_authorityid = a.authorityID "
-//		+"where u.username= :username")
-
-
 public class User{
 
 	@Id
@@ -49,8 +43,17 @@ public class User{
     private String email;
     private String role;
     
+//    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//    @JoinTable(
+//            name = "users_authorities",
+//            joinColumns = @JoinColumn(
+//                    name = "user_id", referencedColumnName = "userID"
+//            ),
+//            inverseJoinColumns = @JoinColumn(
+//                    name = "authority_id", referencedColumnName = "authorityID"
+//            )
+//    )
     @OneToMany
-    
     private Set<Authority> authorities;
     
 	public User() {
