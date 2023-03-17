@@ -2,6 +2,8 @@ package com.reimbursements.services;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -29,7 +31,7 @@ public class UserService {
 		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
 	}
 
-
+	@Transactional
 	public void register(CreateUserRequest req) {
 		final User newUser = new User();
 			newUser.setUsername(req.getUsername());
@@ -40,12 +42,10 @@ public class UserService {
 			newUser.setRole(req.getRole());
 			newUser.setAuthorities(authorityService.getByAuthorityID(req.getAuthorityID()));
 			
-			userRepository.save(newUser);
-		
+			userRepository.save(newUser);	
 	}
 	
 	
-
 	public User getUser(String username) {
 		User user = userRepository.getUserByUsername(username);
 			return user;

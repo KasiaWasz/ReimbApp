@@ -2,6 +2,8 @@ package com.reimbursements.services;
 
 import java.util.Set;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,21 +19,17 @@ public class AuthorityService{
 	
 	
 	
-@Autowired
-	
-		
+	@Autowired	
 	public AuthorityService(AuthorityRepository authorityRepository) {
 		super();
-		this.authorityRepository = authorityRepository;
-		
+		this.authorityRepository = authorityRepository;	
 	}
 
 
-
+	@Transactional
 	public void setNewAuthority(CreateAuthorityRequest req) {
 		final Authority newAuthority = new Authority();
-		newAuthority.setAuthorityName(req.getAuthorityName());
-		newAuthority.setUserID(req.getUserID());		
+		newAuthority.setAuthorityName(req.getAuthorityName());		
 		authorityRepository.save(newAuthority);
 	}
 

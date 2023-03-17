@@ -10,15 +10,15 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQuery;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
-@NamedQuery(name = "UserRepository.getUserByUsername", query = "select u.username, u.userID, a.authorityName from User u "
-		+ "join u.authorities ua on u.userID = ua.userID join Authority a on ua.authorityID = a.authorityID where u.username= :username")
 public class User{
 
 	@Id
@@ -43,17 +43,11 @@ public class User{
     private String email;
     private String role;
     
-//    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//    @JoinTable(
-//            name = "users_authorities",
-//            joinColumns = @JoinColumn(
-//                    name = "user_id", referencedColumnName = "userID"
-//            ),
-//            inverseJoinColumns = @JoinColumn(
-//                    name = "authority_id", referencedColumnName = "authorityID"
-//            )
-//    )
-    @OneToMany
+
+    @ManyToMany
+    @JoinTable(name = "users_authorities",
+      joinColumns = @JoinColumn(name = "user_id"),
+      inverseJoinColumns = @JoinColumn(name = "authority_id"))
     private Set<Authority> authorities;
     
 	public User() {
