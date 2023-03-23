@@ -1,15 +1,14 @@
 package com.reimbursements.services;
 
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
+
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.reimbursements.models.Reimbursement;
-import com.reimbursements.models.Status;
-import com.reimbursements.models.User;
 import com.reimbursements.reporitories.ReimbursementRepository;
 import com.reimbursements.requests.CreateReimbursementRequest;
 import com.reimbursements.requests.UpdateReimbursementRequest;
@@ -34,8 +33,9 @@ protected TypeService typeService;
 		this.statusService = statusService;
 		this.typeService = typeService;
 	}
-
-	public void addNewReimbursement(CreateReimbursementRequest req) {
+	
+	@Transactional
+	public int addNewReimbursement(CreateReimbursementRequest req) {
 		final Reimbursement newReimbursement = new Reimbursement();
 		
 		newReimbursement.setAuthor(userService.getByUserId(req.getAuthorID()));
@@ -45,6 +45,7 @@ protected TypeService typeService;
 		newReimbursement.setType(typeService.getByTypeID(req.getTypeID()));
 		newReimbursement.setDescription(req.getDescription());			
 		reimbursementRepository.save(newReimbursement);
+		return newReimbursement.getId();
 		
 	}
 
@@ -52,15 +53,9 @@ protected TypeService typeService;
 		return reimbursementRepository.getById(id);
 	}
 	
-
-//	public List<Reimbursement> getByReimbursement(User user) {
-//		
-//			return reimbursementRepository.findAll();
-//
-//	}
 	
 	
-	
+	@Transactional
 	public UpdateReimbursementRequest update(UpdateReimbursementRequest req) {
 		Optional<Reimbursement> uReimbursement = reimbursementRepository.getById(req.getId());
 		if(uReimbursement.isPresent()) {

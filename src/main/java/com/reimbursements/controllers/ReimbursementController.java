@@ -30,9 +30,9 @@ public class ReimbursementController {
 	}
 	
 	@PostMapping("/add-new-reimbursement")
-	public ResponseEntity<Reimbursement> addReimbursement(@RequestBody CreateReimbursementRequest req) {
-		reimbursementService.addNewReimbursement(req);
-		return ResponseEntity.status(200).build();
+	public ResponseEntity<Integer> addReimbursement(@RequestBody CreateReimbursementRequest req) {
+		int id = reimbursementService.addNewReimbursement(req);
+		return ResponseEntity.ok(id);
 	}
 	
 	@PutMapping("/update-reimbursement")

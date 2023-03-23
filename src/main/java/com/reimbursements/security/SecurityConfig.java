@@ -56,9 +56,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		http
 		.csrf().disable()
 		.authorizeRequests()
-			.antMatchers(  "/users/user-details").authenticated()
-			//.antMatchers( "/users/authority-registration").hasRole("MANAGER")
-			.antMatchers("/reimbursements/update-reimbursement","/reimbursements/add-new-reimbursement", "/users/authority-registration", "/login", "/users/register", "/users/get-all-users").permitAll()
+			.antMatchers(  "/users/user-details", "/reimbursements/add-new-reimbursement").authenticated()
+			.antMatchers( "/users/authority-registration", "/users/register").hasRole("COS")
+			.antMatchers("/reimbursements/update-reimbursement", "/users/authority-registration", "/login", "/users/get-all-users").permitAll()
 			.and().formLogin();
 	}
 	 @Bean

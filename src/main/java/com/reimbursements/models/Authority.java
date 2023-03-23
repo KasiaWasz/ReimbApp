@@ -18,47 +18,43 @@ public class Authority {
 	private int authorityID;
 	@Column(nullable=false)
 	private String authorityName;
-	@Column
-	private int userID;
+	
 	
 	public Authority() {}
-	
 
-	public Authority(int authorityID, String authorityName, int userID) {
+
+	public Authority(int authorityID, String authorityName) {
 		super();
 		this.authorityID = authorityID;
 		this.authorityName = authorityName;
-		this.userID = userID;
 	}
+
 
 	public int getAuthorityID() {
 		return authorityID;
 	}
 
+
 	public void setAuthorityID(int authorityID) {
 		this.authorityID = authorityID;
 	}
+
 
 	public String getAuthorityName() {
 		return authorityName;
 	}
 
+
 	public void setAuthorityName(String authorityName) {
 		this.authorityName = authorityName;
 	}
 
-	public int getUserID() {
-		return userID;
-	}
-
-	public void setUserID(int userID) {
-		this.userID = userID;
-	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(authorityID, authorityName, userID);
+		return Objects.hash(authorityID, authorityName);
 	}
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -69,16 +65,17 @@ public class Authority {
 		if (getClass() != obj.getClass())
 			return false;
 		Authority other = (Authority) obj;
-		return authorityID == other.authorityID && Objects.equals(authorityName, other.authorityName)
-				&& userID == other.userID;
+		return authorityID == other.authorityID && Objects.equals(authorityName, other.authorityName);
 	}
+
 
 	@Override
 	public String toString() {
-		return "Authority [authorityID=" + authorityID + ", authorityName=" + authorityName + ", userID=" + userID
-				+ "]";
+		return "Authority [authorityID=" + authorityID + ", authorityName=" + authorityName + "]";
 	}
+	
 
+	
 	
 	
 }

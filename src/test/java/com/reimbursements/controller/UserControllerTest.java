@@ -25,6 +25,7 @@ import com.reimbursements.reporitories.AuthorityRepository;
 import com.reimbursements.reporitories.UserRepository;
 import com.reimbursements.requests.CreateAuthorityRequest;
 import com.reimbursements.requests.CreateUserRequest;
+import com.reimbursements.requests.LoginUserRequest;
 
 @ContextConfiguration(classes = SecurityReimbursementsApplication.class)
 @AutoConfigureMockMvc
@@ -36,9 +37,10 @@ public class UserControllerTest {
 	
 	@Autowired
 	  private ObjectMapper objectMapper;
+	
 
 	@Autowired
-	  private UserRepository userReposirtory;
+	  private UserRepository userRepository;
 	
 	@Autowired
 	  private AuthorityRepository authorityRepository;
@@ -64,7 +66,7 @@ public class UserControllerTest {
         		 .content(objectMapper.writeValueAsString(createUserRequest)))
         	     .andExpect(status().isOk());
          
-         User user = userReposirtory.getUserByUsername("newuser");
+         User user = userRepository.getUserByUsername("newuser");
          assertThat(user.getEmail()).isEqualTo("test@wp.pl");
        }
 	
@@ -81,6 +83,19 @@ public class UserControllerTest {
          Optional<Authority> authority = authorityRepository.findById(7);
          assertThat(authority.get().getAuthorityName()).isEqualTo("ROLE_ADMIN");                
 
-    }}
+    }
+	@Test
+	void loginTest() throws Exception{
+		LoginUserRequest loginUserRequest = new LoginUserRequest("test21", "test21");
+		
+		mockMvc.perform(post("/login")
+			.contentType("application/json")
+       		.content(objectMapper.writeValueAsString(loginUserRequest)))
+			.andExpect(status().isOk());
+		
+		Optional<User> user = userRepository.findById(1);
+      assertThat(user.get().getFirstname()).isEqualTo("test2");
+		}
+	}
 
 
