@@ -36,7 +36,7 @@ public class ReimbursementController {
 	}
 	
 	@PutMapping("/update-reimbursement")
-	public ResponseEntity<UpdateReimbursementRequest> updateReimbursement(@RequestBody UpdateReimbursementRequest req, HttpSession session){ 
+	public ResponseEntity<UpdateReimbursementRequest> updateReimbursement(@RequestBody UpdateReimbursementRequest req){ 
 			reimbursementService.update(req);
 			return ResponseEntity.status(200).body(req);
 		}
