@@ -8,11 +8,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -47,6 +50,7 @@ public class UserControllerTest {
 	
 	
 	@Test
+	
 	void ShouldGetAllUsersTest() throws Exception {
 		
 		mockMvc.perform(MockMvcRequestBuilders.get("/users/get-all-users"))
@@ -57,6 +61,7 @@ public class UserControllerTest {
 	}
 	
 	@Test
+	@Transactional
     void registerTest() throws Exception {
         
 		CreateUserRequest createUserRequest = new CreateUserRequest("newuser", "test", "Firstname", "Lastname", "test@wp.pl", "ROLE_ADMIN", 4);
@@ -71,6 +76,7 @@ public class UserControllerTest {
        }
 	
 	@Test
+	@Transactional
 	void registerNewAuthorityTest() throws Exception {
         
 		CreateAuthorityRequest createAuthorityRequest = new CreateAuthorityRequest("ROLE_ADMIN", 1);
@@ -84,17 +90,21 @@ public class UserControllerTest {
          assertThat(authority.get().getAuthorityName()).isEqualTo("ROLE_ADMIN");                
 
     }
+	
 	@Test
+	@Transactional
 	void loginTest() throws Exception{
 		LoginUserRequest loginUserRequest = new LoginUserRequest("test21", "test21");
 		
-		mockMvc.perform(post("/login")
-			.contentType("application/json")
-       		.content(objectMapper.writeValueAsString(loginUserRequest)))
-			.andExpect(status().isOk());
+		MockHttpServletResponse response = mockMvc.perform(post("/login")
+				.contentType("application/x-www-form-urlencoded")
+	       		.content(String.format("username=%s&password=%s", loginUserRequest.getUsername(), loginUserRequest.getPassword())))
+			.andExpect(status().is3xxRedirection())
+			.andReturn()
+			.getResponse();
 		
-		Optional<User> user = userRepository.findById(1);
-      assertThat(user.get().getFirstname()).isEqualTo("test2");
+		assertThat(response.getStatus()).isEqualTo(302);
+		assertThat(response.getHeader("Location")).isEqualTo("/");
 		}
 	}
 
